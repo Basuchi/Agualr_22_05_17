@@ -1,0 +1,308 @@
+import { Component } from '@angular/core';
+
+
+export class TVChannel {
+	id :number ;
+	name :string;
+
+}
+@Component({
+  selector: 'my-app',
+  template: `<h1> {{chan.name}} {{empNumber}}</h1>`,
+})
+export class AppComponent  { 
+private name = 'Hello,Basuchi, your Emp Id is : '; 
+public empNumber : string ="1234";
+
+public chan : TVChannel = {
+	id : 100;
+	name : "Republic";
+}
+
+}
+
+
+--------------------------------------------
+
+    export class TvChannel {  // define this first i.e. before AppComponent.
+        id: number;
+        name: string;
+    }
+    
+    
+    @Component({
+      selector: 'my-app',
+      template: '<h3>{{title}}</h3> <h4>{{chan.name }}</h4><br /> See on ch.: {{chan.id}}. <br /> Breaking news... now'
+    
+    
+     })
+    
+    
+    export class AppComponent {
+      public title = 'Popular TV Channel';
+    
+      public chan: TvChannel = {
+        id: 507,
+        name: 'Republic'
+      };
+    }
+	
+	--------------------------------------------------------------------------------
+	
+	@Component({
+        selector: 'my-app',
+      template: '<div>Most popular JS lib: {{lib}}.<br><br> <button (click)="whichLib()">Vote</button></div>'
+    })
+    
+    
+    export class AppComponent {
+     public lib = "jQuery" ;
+    
+      //whichLib() { console.log('Voted - lib: ', this.lib)};
+        public whichLib = () => { console.log('Voted - library: ', this.lib)};
+    }
+    ------------------------------------------------------------------------------------
+	
+	
+	
+	export class TvChannel {
+  id: number;
+  name: string;
+  programName: string;
+}
+
+@Component({
+  selector: 'my-app',
+  template: `
+             <h1>{{title}}</h1> 
+             <h2>{{chan.name}}</h2> 
+             <aside> Showing {{chan.programName}}</aside> <br><br> 
+             See on channel: {{chan.id}} - TataSky <br><br><br> 
+            <div>
+                  <label>Current Program: </label>
+                  <input (ngModel)="chan.programName" placeholder="My fav prog . ">
+            </div>
+            
+             `
+})
+
+
+export class AppComponent {
+  title = 'Popular TV Channel';
+
+  chan: TvChannel = {
+    id: 507,
+    name: 'Republic' ,
+    programName: "News"
+  };
+}
+------------------------------------------------------------------
+export class Channel {
+    id: number;
+    name: string;
+}
+
+// ===== the decorator & its class go together as one unit =================
+
+@Component({
+  selector: 'my-app',
+  template: `
+      <h2 id="hdr">{{title}}</h2>
+      <h5>My TV Channels</h5>
+      <section>
+        <ul class="favs">
+          <li *ngFor=" let channel of channels"
+                [class.selected]="channel === selectedChannel"
+                 (click)="onSelect(channel)">
+       
+            <span class="badge">{{channel.id}}</span> {{channel.name}}
+          </li>
+        </ul>
+      </section>
+
+     
+
+    <aside *ngIf="selectedChannel">
+      <h4>{{selectedChannel.name}} Description:</h4>
+      <div><label>id: </label>{{selectedChannel.id}}</div>
+
+      <div>
+        <label>name: </label>
+        <input [(ngModel)]="selectedChannel.name" placeholder="name"/>
+      </div>
+    </aside>
+  `,
+  styles: [`
+    .selected {
+      background-color: #CFD8DC !important;
+      color: white;
+    }
+    #hdr{color: darkmagenta;}
+    section, aside{margin-right: 5em; float: left;}
+    aside{border: 1px solid blue; padding: 1.2em;}
+    
+    .favs {
+      margin: 0 0 2em 0;
+      list-style-type: none;
+      padding: 0;
+      width: 15em;
+      border: 1px dotted blue ;
+    }
+    .favs li {
+      cursor: pointer;
+      position: relative;
+      left: 0;
+      background-color: lightseagreen;
+      margin: .5em;
+      padding: .3em 0;
+      height: 1.6em;
+      border-radius: 4px;
+    }
+    .favs li.selected:hover {
+      background-color: #BBD8DC !important;
+      color: white;
+    }
+    .favs li:hover {
+      color: #607D8B;
+      background-color: #DDD;
+      left: .1em;
+    }
+    .favs .text {
+      position: relative;
+      top: -3px;
+    }
+    .favs .badge {
+      display: inline-block;
+      font-size: small;
+      color: white;
+      padding: 0.8em 0.7em 0 0.7em;
+      background-color: #607D8B;
+      line-height: 1em;
+      position: relative;
+      left: -1px;
+      top: -4px;
+      height: 1.8em;
+      margin-right: .8em;
+      border-radius: 4px 0 0 4px;
+    }
+  `]
+})
+
+export class AppComponent {
+  title = "Tata Sky: Popular TV Channels";
+  channels = CHANNELS;
+  selectedChannel: Channel;
+  onSelect(channel: Channel) { this.selectedChannel = channel; }
+}
+
+const CHANNELS: Channel[] = [
+  { "id": 11, "name": "Zee News" },
+  { "id": 12, "name": "Zee Business" },
+  { "id": 13, "name": "Sony" },
+  { "id": 14, "name": "ETV" },
+  { "id": 15, "name": "Colors" },
+  { "id": 16, "name": "ET Now" },
+  { "id": 17, "name": "Bloomberg" },
+  { "id": 18, "name": "Republic" },
+  { "id": 19, "name": "CNN" },
+  { "id": 20, "name": "Nat Geo" }
+];
+
+
+--------------------------------------------------------------------------
+
+
+====================================================================
+
+@Component({
+    selector: 'my-app',
+    template: `
+   <div class="panel panel-primary">
+      <div class="panel-heading">Component Lifecycle </div>
+      <div class="panel-body">
+        <div>
+          <h5>List of Lifecycle Events of A Component:
+                <button class="btn btn-sm btn-primary pull-right" (click)="reset()">Reset</button></h5>
+          <br />
+            <table class="table table-condensed table-hover table-bordered">
+              <thead>
+                <th>#</th>
+                <th>Lifecycle Event</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let lifecycleEvent of lifecycleEvents, let i=index">
+                  <td>{{i+1}}</td>
+                  <td>{{lifecycleEvent}}</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+    `
+})
+export  class AppComponent {
+
+    lifecycleEvents:Array<string>;
+
+    constructor() { this.lifecycleEvents = []; console.log("constructor()"); }
+
+    reset() { this.lifecycleEvents = []; console.log("reset()");}
+    ngOnInit() { this.lifecycleEvents.push("ngOnInit");  }
+    ngOnChanges(changeRecord: any) {this.lifecycleEvents.push("ngOnChanges"); }
+    ngDoCheck() { this.lifecycleEvents.push("ngDoCheck"); }
+    ngAfterViewInit() {this.lifecycleEvents.push("ngAfterViewInit"); }
+
+
+    ngOnDestroy() {this.lifecycleEvents.push("ngOnDestroy"); }
+}
+
+
+
+
+=======================================================================
+
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({name: 'powerOf'})
+
+export class PowerOfPipe implements PipeTransform {
+    transform(value: number, exponent: string): number {
+        let exp = parseFloat(exponent);
+        return Math.pow(value, isNaN(exp) ? 1 : exp);
+    }
+}
+
+
+*****************************
+@Component({
+    selector: 'my-app',
+
+    template: `<h1>{{title}}</h1> <h2>{{chan.name | uppercase }}</h2><br> 
+             See on ch.: {{chan.id}}. <br> 
+             Breaking news...  <br> 
+             {{chan| json}} <br> <br> <br> 
+             
+             <aside>Use of custom pipe: (2 ^ 4) = {{2 | powerOf:4}}</aside>
+             `
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
